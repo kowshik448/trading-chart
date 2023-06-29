@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { createChart } from 'lightweight-charts';
 import { INTERVAL_SWITCHES } from '../constants/intervalSwitches';
-import generateRandomDataPoint from '../utils/getNewDatapoint';
+// import generateRandomDataPoint from '../utils/getNewDatapoint';
 
 
 const ChartComponent = ({ resolution ,OHLCData,selectedInstrumentsData}) => {
@@ -17,6 +17,17 @@ const ChartComponent = ({ resolution ,OHLCData,selectedInstrumentsData}) => {
     wickUpColor: '#26a69a', wickDownColor: '#ef5350',
 };
   const interval = INTERVAL_SWITCHES[resolution];
+
+// generating new random data point to make it look like receiving from websocket
+  const generateRandomDataPoint = (interval,lastEntry) => {
+    const basePrice = lastEntry["value"];
+    const baseTime = lastEntry["time"];
+    const price = basePrice + Math.random() * 10 - Math.random()*10;
+    const timestamp = baseTime + interval/1000;
+    data.push({ time: timestamp, value: price });
+  
+    return {time:timestamp,value:price};
+  };
 
 // creating a chart with different types of series 
 
