@@ -1,7 +1,7 @@
 import { INTERVAL_SWITCHES } from "../constants/intervalSwitches";
 
 const aggregateData = (data, resolution) => {
-    if (!data) return []
+    if (!data || data.length==0) return []
     const OHLCData = [];
   
     const interval = INTERVAL_SWITCHES[resolution];

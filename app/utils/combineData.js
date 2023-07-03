@@ -1,32 +1,29 @@
-import { INTERVAL_SWITCHES } from "../constants/intervalSwitches";
+// import { INTERVAL_SWITCHES } from "../constants/intervalSwitches";
+import aggregateData from "./aggregate";
 
 const combineInstrumentsData = (instrumentsData, resolution) => {
-    const combinedOHLCData = [];
+    let combinedOHLCData;
     const combinedLineData = [];
-    const interval = INTERVAL_SWITCHES[resolution];
   
     const timestampMap = new Map();
   
     instrumentsData.forEach((instrument) => {
       if(instrument){
       instrument.forEach(({time, value}) => {
-        const intervalTimestamp = Math.floor(time*1000 / interval) * interval/1000;
+        const intervalTimestamp = time;
         if (timestampMap.has(intervalTimestamp)) {
-          timestampMap.get(intervalTimestamp).push(value);
+          timestampMap.set(intervalTimestamp,timestampMap.get(intervalTimestamp)+value);
         } else {
-          timestampMap.set(intervalTimestamp, [value]);
+          timestampMap.set(intervalTimestamp, value);
         }
       });}
     });
   
-    timestampMap.forEach((prices, timestamp) => {
-      const open = prices[0];
-      const high = Math.max(...prices);
-      const low = Math.min(...prices);
-      const close = prices[prices.length - 1];
-      combinedOHLCData.push({ time: timestamp, open:open, high:high, low:low, close:close });
-      combinedLineData.push({ time : timestamp, value : close});
+    timestampMap.forEach((price, timestamp) => {
+      combinedLineData.push({ time : timestamp, value : price});
     });
+    combinedOHLCData = aggregateData(combinedLineData,resolution)
+    console.log(combinedLineData,combinedOHLCData,'both')
   
     return [combinedLineData,combinedOHLCData];
   };
