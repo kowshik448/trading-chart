@@ -23,7 +23,6 @@ const combineInstrumentsData = (instrumentsData, resolution) => {
       combinedLineData.push({ time : timestamp, value : price});
     });
     combinedOHLCData = aggregateData(combinedLineData,resolution)
-    console.log(combinedLineData,combinedOHLCData,'both')
   
     return [combinedLineData,combinedOHLCData];
   };
