@@ -1,4 +1,4 @@
-#Link - https://trading-chart-ten.vercel.app/
+#Link - [https://trading-chart-ten.vercel.app/](https://trading-chart-9iprpc95m-kowshik448.vercel.app/)
 1. This is NextJs App , made using create-next-app
 
 2. Created a trading chart for single and multple instruments
